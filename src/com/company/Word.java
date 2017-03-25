@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * Created by suminskutis on 2017-03-25.
  */
-public class Word {
+public class Word  {
         public static final int SIZE = 4;
         private byte[] data;
 
@@ -37,7 +37,7 @@ public class Word {
             return Arrays.equals(data, word.data);
         }
 
-        public static int wordToInt(Word word) {
+        public static int wordToInt(Word word)throws CloneNotSupportedException   {
             ByteBuffer bb = ByteBuffer.allocateDirect(SIZE);
             bb.order(ByteOrder.LITTLE_ENDIAN);
             bb.clear();
@@ -48,7 +48,7 @@ public class Word {
             return bb.getInt();
         }
 
-        public static Word intToWord(int value) {
+        public static Word intToWord(int value) throws CloneNotSupportedException {
             ByteBuffer bb = ByteBuffer.allocate(SIZE);
             bb.order(ByteOrder.LITTLE_ENDIAN);
             bb.clear();
@@ -60,7 +60,7 @@ public class Word {
             return word;
         }
 
-        public static String wordsToString(Word[] words) {
+        public static String wordsToString(Word[] words) throws CloneNotSupportedException {
             String string = "";
             for (Word w : words) {
                 //System.out.println(string);
