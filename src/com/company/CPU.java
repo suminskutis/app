@@ -142,6 +142,10 @@ public class CPU {
         return 0;
     }
 
+    public void decreaseTI(){
+        TI--;
+    }
+
     public int getSM() {
         return SM;
     }

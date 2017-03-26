@@ -16,6 +16,13 @@ public class VirtualCPU {
         setPID(PID);
     }
 
+    public void decreaseSP(){
+        SP--;
+    }
+
+    public void increaseSP(){
+        SP++;
+    }
 
     public void setPC(int PC) {
         this.PC = PC;
