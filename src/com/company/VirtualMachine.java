@@ -32,14 +32,9 @@ public class VirtualMachine {
     private static int PID;*/
 
     // Default constructor
-    public VirtualMachine(int index){
+    public VirtualMachine(){
         this.virtualCPU = new VirtualCPU();
         this.virtualMemory = new VirtualMemory(MEMORY_SIZE);
-        this.index = index;
-        this.SP = CPU.getSP();
-        this.TI = CPU.getTI();
-        this.SI = CPU.getSI();
-        this.PID = CPU.getPID();
     }
 
     public VirtualMemory getVirtualMemory(){
@@ -59,9 +54,6 @@ public class VirtualMachine {
     }
     public int getPID(){
         return Word.wordToInt(PMMU.read(PID_ADDRESS));
-    }
-    public int getIndex(){
-        return index;
     }
 
     public void savePC(int PC){

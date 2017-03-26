@@ -6,7 +6,7 @@ package com.company;
 public class VirtualCPU {
 
     private int PC;
-    private int SP;
+    private int SP = 255;
     private int PID;
 
 
