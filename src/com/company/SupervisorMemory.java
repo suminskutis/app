@@ -6,7 +6,7 @@ package com.company;
 public class SupervisorMemory {
 
     Word[] memory;
-    int size = 65536;
+    int size = 4096;
 
     public SupervisorMemory() {
         memory = new Word[size];

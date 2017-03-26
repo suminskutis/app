@@ -142,7 +142,7 @@ public class CPU {
         return 0;
     }
 
-    public void decreaseTI(){
+    public static void decreaseTI(){
         TI--;
     }
 
