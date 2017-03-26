@@ -62,45 +62,45 @@ public class VirtualMachine {
 
     public void cmdADD() {
         PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) + Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        SP--;
-        TI--;
+        VirtualCPU.decreaseSP();
+        CPU.decreaseTI();
     }
 
     public void cmdSUB() {
         PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) - Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        SP--;
-        TI--;
+        VirtualCPU.decreaseSP();
+        CPU.decreaseTI();
     }
 
     public void cmdMUL() {
         PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) * Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        SP--;
-        TI--;
+        VirtualCPU.decreaseSP();
+        CPU.decreaseTI();
     }
 
     public void cmdDIV() {
         PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) / Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        SP--;
-        TI--;
+        VirtualCPU.decreaseSP();
+        CPU.decreaseTI();
     }
 
     public void cmdWR(int x) {
         PMMU.write(PMMU.read(SP), x);
-        TI--;
+        CPU.decreaseTI();
     }
 
     public void cmdRD(int x) {
         PMMU.write(PMMU.read(x), SP);
-        SP--;
-        TI--;
+        VirtualCPU.decreaseSP();
+        CPU.decreaseTI();
     }
 
 
 
     public void cmdPUSH(int x, int y) {
         PMMU.write(PMMU.read(RealMachine.VM_SIZE_IN_BLOCKS * x + y), SP);
-        SP++;
-        TI--;
+        VirtualCPU.increaseSP();
+        CPU.decreaseTI();
     }
 
     public void cmdPOP(int x, int y) {
@@ -108,9 +108,9 @@ public class VirtualMachine {
             CPU.setPI(1);
             return;
         }
-        SP++;
+        VirtualCPU.increaseSP();
         PMMU.write(PMMU.read(SP), RealMachine.VM_SIZE_IN_BLOCKS * x + y);
-        TI--;
+        CPU.decreaseTI();
     }
 
     public void cmdPRTN() {
