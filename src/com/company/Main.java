@@ -1,17 +1,15 @@
 package com.company;
 
+import jdk.internal.util.xml.impl.Input;
+
 import javax.swing.*;
 
 public class Main {
 
-  //  private static GUI GUI;
+
     public static void main(String[] args) {
-       /* JFrame frame = new JFrame("RM");
-        GUI = new GUI();
-        frame.setContentPane(GUI.getPanel());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
-        GUI.redraw();*/
+      InputDevice.
+
+
     }
 }

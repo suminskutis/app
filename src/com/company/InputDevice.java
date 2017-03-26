@@ -19,7 +19,6 @@ public class InputDevice {
 
     public static Word[] getInput() throws IOException {
 
-        // readLine method throws IOException if an I/O error occurs
         String s = bufferRead.readLine();
 
         if(s == null)

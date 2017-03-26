@@ -7,12 +7,11 @@ import java.util.Arrays;
  */
 public class Memory {
 
-    private int size;
+    private int size = 4096;
     private Word[] memory;
 
-
     //užpildom atmintį nurodytu žodžių skaičiumi
-    public Memory(int size){
+    public Memory(){
         if (size > 0){
             this.size = size;
             memory = new Word[size];
@@ -42,15 +41,15 @@ public class Memory {
         return Arrays.copyOf(memory, size);
     }
 
-    public void print(){
+    public void print() throws CloneNotSupportedException {
         String output = "";
         for(int i = 0; i < this.size; i++){
             System.out.println(i + ": " + Word.wordToInt(memory[i]));
         }
     }
-    public void printBlock(int address){
+    public void printBlock(int address) throws CloneNotSupportedException {
         String output = "";
-        for(int i = address; i < address + PMMU.WORDS_IN_BLOCK; i++){
+        for(int i = address; i < address + 16; i++){
             System.out.println(i + ": " + Word.wordToInt(memory[i]));
         }
     }
