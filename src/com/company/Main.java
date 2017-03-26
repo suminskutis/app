@@ -1,15 +1,14 @@
 package com.company;
 
-import jdk.internal.util.xml.impl.Input;
-
-import javax.swing.*;
+import java.io.IOException;
 
 public class Main {
 
 
-    public static void main(String[] args) {
-      InputDevice.
+    public static void main(String[] args) throws IOException {
 
+    	InputValidator validuojam = new InputValidator();
+    	System.out.println(validuojam.validateString("input.txt"));
 
     }
 }
