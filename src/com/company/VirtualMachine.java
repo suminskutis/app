@@ -159,14 +159,14 @@ public class VirtualMachine {
     }
     */
     public static void cmdSTOPF() {// BESALYGINIO SUSTOJIMO KOMANDA -> PAS MUS HALT
-        SI = 5;
+        CPU.setSI(5);
 
     }
 
     public static void cmdREAD() {
 
-        TI -= 3;
-        SI = 4;
+        CPU.decreaseTI();
+        CPU.setSI(4);
     }
 }
 
