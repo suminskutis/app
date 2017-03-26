@@ -25,12 +25,6 @@ public class VirtualMachine {
     final int SP_ADDRESS = 110;
     final int PID_ADDRESS = 111;
 
-    //REGISTRAI -> Veliau tikrinti gaunamas reiksmes
-   /* private static int SP;
-    private static int TI;
-    private static int SI;
-    private static int PID;*/
-
     // Default constructor
     public VirtualMachine(){
         this.virtualCPU = new VirtualCPU();
@@ -100,37 +94,16 @@ public class VirtualMachine {
         SP--;
         TI--;
     }
-    /* NEREIKALINGA
-    public void cmdCMP() {
-        //System.out.println(Word.wordToInt(PMMU.read(SP)) + ">" + Word.wordToInt(PMMU.read(SP-1)));
-        if (Word.wordToInt(PMMU.read(SP)) > Word.wordToInt(PMMU.read(SP - 1))) {
-            PMMU.write(Word.intToWord(0), SP);
-        } else if (Word.wordToInt(PMMU.read(SP)) == Word.wordToInt(PMMU.read(SP - 1))) {
-            PMMU.write(Word.intToWord(1), SP);
-        } else {
-            PMMU.write(Word.intToWord(2), SP);
-        }
-        //SP++;
-        TI--;
-    }
 
-    public void cmdCPID() {
-        if (Word.wordToInt(PMMU.read(SP)) != PID) {
-            PMMU.write(Word.intToWord(0), SP);
-        } else {
-            PMMU.write(Word.intToWord(1), SP);
-        }
-        //SP--;
-        TI--;
-    }
 
-    public void cmdLD(int x, int y) {
+
+    public void cmdPUSH(int x, int y) {
         PMMU.write(PMMU.read(RealMachine.VM_SIZE_IN_BLOCKS * x + y), SP);
         SP++;
         TI--;
     }
 
-    public void cmdPT(int x, int y) {
+    public void cmdPOP(int x, int y) {
         if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.DATA_START+VirtualMachine.DATA_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.DATA_START){
             CPU.setPI(1);
             return;
@@ -140,18 +113,6 @@ public class VirtualMachine {
         TI--;
     }
 
-    public void cmdPUN(int x) {
-        SP++;
-        main.PMMU.write(Word.intToWord(x), SP);
-        TI--;
-    }
-
-    public void cmdPUS(Word x) {
-        SP++;
-        main.PMMU.write(x, SP);
-        TI--;
-    }
-    */
     public void cmdPRTN() {
         TI -= 3;
         SI = 2;
@@ -161,20 +122,8 @@ public class VirtualMachine {
         TI -= 3;
         SI = 1;
     }
-    /* NEREIKALINGA
-    public void cmdP(int x, int y, int z){
-        if(x < 0 || x > 6 || y >= z) {
-            CPU.setPI(1);
-            return;
-        }
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        TI -= 3;
-        SI = 3;
-    }
-    */
-    public void cmdJP(int x, int y) {
+
+    /*public void cmdJP(int x, int y) {
         if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.PROGRAM_START+VirtualMachine.PROGRAM_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.PROGRAM_START){
             CPU.setPI(1);
             return;
@@ -193,42 +142,8 @@ public class VirtualMachine {
             SP--;
         }
         TI--;
-    }
-    /* JUMPAI NEREIKALINGI SIUO METU
-    public void cmdJL(int x, int y) {
-        if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.PROGRAM_START+VirtualMachine.PROGRAM_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.PROGRAM_START){
-            CPU.setPI(1);
-            return;
-        }
-        if (Word.wordToInt(main.PMMU.read(SP)) == 0) {
-            CPU.setPC(PMMU.WORDS_IN_BLOCK * x + y);
-            SP--;
-        }
-        TI--;
-    }
+    }*/
 
-    public void cmdJG(int x, int y) {
-        if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.PROGRAM_START+VirtualMachine.PROGRAM_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.PROGRAM_START){
-            CPU.setPI(1);
-            return;
-        }
-        if (Word.wordToInt(main.PMMU.read(SP)) == 2) {
-            CPU.setPC(PMMU.WORDS_IN_BLOCK * x + y);
-            SP--;
-        }
-        TI--;
-    }
-    */
-    public void cmdFO(int x, int y) {
-        if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.DATA_START+VirtualMachine.DATA_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.DATA_START){
-            CPU.setPI(1);
-            return;
-        }
-        this.x = x;
-        this.y = y;
-        TI--;
-        SI = 6;
-    }
     /* REIKIA EDITINTI
     public void cmdST(int x, int y) {
         if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) == VirtualMachine.DATA_START+VirtualMachine.DATA_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.DATA_START){
@@ -244,7 +159,6 @@ public class VirtualMachine {
     }
     */
     public static void cmdSTOPF() {// BESALYGINIO SUSTOJIMO KOMANDA -> PAS MUS HALT
-
         SI = 5;
 
     }
