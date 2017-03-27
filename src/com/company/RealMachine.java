@@ -1,5 +1,7 @@
 package com.company;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -10,10 +12,11 @@ public class RealMachine {
 
     private CPU cpu;
     private Memory memory;
+    private VirtualMachine virtualMachine;
     public final static int VM_SIZE_IN_BLOCKS = 16;
 
 
-    public RealMachine(){
+    public RealMachine() {
         this.cpu = new CPU();
         this.memory = new Memory();
     }
@@ -82,32 +85,72 @@ public class RealMachine {
     }*/
 
     public static Integer hexToDec(String s) {
-        switch(s.charAt(0)){
-            default: return Integer.parseInt(s);
-            case 'A': return 10;
-            case 'B': return 11;
-            case 'C': return 12;
-            case 'D': return 13;
-            case 'E': return 14;
-            case 'F': return 15;
+        switch (s.charAt(0)) {
+            default:
+                return Integer.parseInt(s);
+            case 'A':
+                return 10;
+            case 'B':
+                return 11;
+            case 'C':
+                return 12;
+            case 'D':
+                return 13;
+            case 'E':
+                return 14;
+            case 'F':
+                return 15;
 
         }
     }
 
-    public  void execute() throws IOException, CloneNotSupportedException {
+    public void execute() throws IOException, CloneNotSupportedException {
         //InputDevice.openFile();
 
+        virtualMachine = new VirtualMachine();
         InputDevice.openFile();
-        Word[] aa; //InputDevice.getInput();
+        Word[] words; //InputDevice.getInput();
 
-        int i = 0;
-        String aaa = "a";
-        while(!(aaa.equals("HALT"))) {
-            aa = InputDevice.getInput();
-            aaa = Word.wordsToString(aa);
 
-            System.out.println(aaa);
+        String line;
+        int counter = 0;
+        /*while(!(line.equals("HALT"))) {
+            words = InputDevice.getInput();
+            line = Word.wordsToString(words);
+
+            System.out.println(line);
+        }*/
+        try {
+            line = Word.wordsToString(InputDevice.getInput());
+            if (line.equals("DATASEG")) {
+                CPU.setCH1(1);
+                words = InputDevice.getInput();
+                CPU.setCH1(0);
+                line = Word.wordsToString(words);
+                while (!(line.equals("CODESEG"))) {
+                    for (Word w : words) {
+                        for (int i = 0; i < 4; i++) {
+                            byte b = w.getByte(i);
+                            if (b != 0x0) {
+                                this.virtualMachine.getVirtualMemory().write(Word.intToWord(b), VirtualMachine.DATA_START + counter++);
+                            }
+                        }
+                    }
+                    CPU.setCH1(1);
+                    words = InputDevice.getInput();
+                    CPU.setCH1(0);
+                    line = Word.wordsToString(words);
+                }
+
+            }
+        }catch(Exception e){
+            System.out.println("BYBYS");
         }
+        //this.virtualMachine.printMemory();
     }
+}
 
-    }
+//      }
+//        //vm.getVirtualMemory().print();
+//    }
+//}

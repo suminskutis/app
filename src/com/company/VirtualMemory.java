@@ -5,19 +5,26 @@ package com.company;
  */
 public class VirtualMemory {
     Word[] memory;
+    int size = 256;
 
     public VirtualMemory(int size) {
         memory = new Word[size];
     }
 
     public Word[] getMemory(){
-        return memory;
+        return this.memory;
     }
 
     public Word read(int address) {
         return memory[address];
     }
     public void write(Word word, int address) {
-        memory[address] = word;
+        this.memory[address] = word;
+    }
+    public void print() throws CloneNotSupportedException {
+        //String output = "";
+        for(int i = 0; i < size; i++){
+            System.out.println(i + ": " + Word.wordToInt(memory[i]));
+        }
     }
 }

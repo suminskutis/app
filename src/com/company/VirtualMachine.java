@@ -28,12 +28,12 @@ public class VirtualMachine {
     }
 
     public VirtualMemory getVirtualMemory(){
-        return virtualMemory;
+        return this.virtualMemory;
     }
 
     public void printMemory() {
         for(int i = 0; i < MEMORY_SIZE; i++)
-            System.out.println(virtualMemory.getMemory()[i] + " ");
+            System.out.println(this.virtualMemory.getMemory()[i] + " ");
     }
 
     public int getPC() throws CloneNotSupportedException {
