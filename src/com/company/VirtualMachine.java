@@ -40,76 +40,76 @@ public class VirtualMachine {
             System.out.println(virtualMemory.getMemory()[i] + " ");
     }
 
-    public int getPC(){
-        return Word.wordToInt(PMMU.read(PC_ADDRESS));
+    public int getPC() throws CloneNotSupportedException {
+        return Word.wordToInt(virtualMemory.read(PC_ADDRESS));
     }
-    public int getSP(){
-        return Word.wordToInt(PMMU.read(SP_ADDRESS));
+    public int getSP() throws CloneNotSupportedException {
+        return Word.wordToInt(virtualMemory.read(SP_ADDRESS));
     }
-    public int getPID(){
-        return Word.wordToInt(PMMU.read(PID_ADDRESS));
-    }
-
-    public void savePC(int PC){
-        PMMU.write(Word.intToWord(PC), PC_ADDRESS);
-    }
-    public void saveSP(int SP){
-        PMMU.write(Word.intToWord(SP), SP_ADDRESS);
-    }
-    public void savePID(int PID){
-        PMMU.write(Word.intToWord(PID), PID_ADDRESS);
+    public int getPID() throws CloneNotSupportedException {
+        return Word.wordToInt(virtualMemory.read(PID_ADDRESS));
     }
 
-    public void cmdADD() {
-        PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) + Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        VirtualCPU.decreaseSP();
+    public void savePC(int PC) throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(PC), PC_ADDRESS);
+    }
+    public void saveSP(int SP) throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(SP), SP_ADDRESS);
+    }
+    public void savePID(int PID) throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(PID), PID_ADDRESS);
+    }
+
+    public void cmdADD() throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(Word.wordToInt(virtualMemory.read(getSP())) + Word.wordToInt(virtualMemory.read(getSP() - 1))), getSP() - 1);
+        virtualCPU.decreaseSP();
         CPU.decreaseTI();
     }
 
-    public void cmdSUB() {
-        PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) - Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        VirtualCPU.decreaseSP();
+    public void cmdSUB() throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(Word.wordToInt(virtualMemory.read(getSP())) - Word.wordToInt(virtualMemory.read(getSP() - 1))), getSP() - 1);
+        virtualCPU.decreaseSP();
         CPU.decreaseTI();
     }
 
-    public void cmdMUL() {
-        PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) * Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        VirtualCPU.decreaseSP();
+    public void cmdMUL() throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(Word.wordToInt(virtualMemory.read(getSP())) * Word.wordToInt(virtualMemory.read(getSP() - 1))), getSP() - 1);
+        virtualCPU.decreaseSP();
         CPU.decreaseTI();
     }
 
-    public void cmdDIV() {
-        PMMU.write(Word.intToWord(Word.wordToInt(PMMU.read(SP)) / Word.wordToInt(PMMU.read(SP - 1))), SP - 1);
-        VirtualCPU.decreaseSP();
+    public void cmdDIV() throws CloneNotSupportedException {
+        virtualMemory.write(Word.intToWord(Word.wordToInt(virtualMemory.read(getSP())) / Word.wordToInt(virtualMemory.read(getSP() - 1))), getSP() - 1);
+        virtualCPU.decreaseSP();
         CPU.decreaseTI();
     }
 
-    public void cmdWR(int x) {
-        PMMU.write(PMMU.read(SP), x);
+    public void cmdWR(int x) throws CloneNotSupportedException {
+        virtualMemory.write(virtualMemory.read(getSP()), x);
         CPU.decreaseTI();
     }
 
-    public void cmdRD(int x) {
-        PMMU.write(PMMU.read(x), SP);
-        VirtualCPU.decreaseSP();
+    public void cmdRD(int x) throws CloneNotSupportedException {
+        virtualMemory.write(virtualMemory.read(x), getSP());
+        virtualCPU.decreaseSP();
         CPU.decreaseTI();
     }
 
 
 
-    public void cmdPUSH(int x, int y) {
-        PMMU.write(PMMU.read(RealMachine.VM_SIZE_IN_BLOCKS * x + y), SP);
-        VirtualCPU.increaseSP();
+    public void cmdPUSH(int x, int y) throws CloneNotSupportedException {
+        virtualMemory.write(virtualMemory.read(RealMachine.VM_SIZE_IN_BLOCKS * x + y), getSP());
+        virtualCPU.increaseSP();
         CPU.decreaseTI();
     }
 
-    public void cmdPOP(int x, int y) {
+    public void cmdPOP(int x, int y) throws CloneNotSupportedException {
         if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.DATA_START+VirtualMachine.DATA_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.DATA_START){
             CPU.setPI(1);
             return;
         }
-        VirtualCPU.increaseSP();
-        PMMU.write(PMMU.read(SP), RealMachine.VM_SIZE_IN_BLOCKS * x + y);
+        virtualCPU.increaseSP();
+        virtualMemory.write(virtualMemory.read(getSP()), RealMachine.VM_SIZE_IN_BLOCKS * x + y);
         CPU.decreaseTI();
     }
 
@@ -168,5 +168,9 @@ public class VirtualMachine {
         CPU.decreaseTI();
         CPU.setSI(4);
     }
+
+  /*  public int getSP(){
+        return virtualCPU.getSP();
+    }*/
 }
 

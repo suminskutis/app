@@ -29,7 +29,7 @@ public class Word  {
         }
 
         @Override
-        protected Word clone() throws CloneNotSupportedException {  // FIXME: This method should throw: throws CloneNotSupportedException
+        protected Word clone(){  // FIXME: This method should throw: throws CloneNotSupportedException
             return new Word(this);
         }
 

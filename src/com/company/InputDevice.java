@@ -14,7 +14,7 @@ public class InputDevice {
     //private static String string = new String("ABCDEFGHI");
 
     public static void openFile() throws FileNotFoundException {
-        bufferRead = new BufferedReader(new FileReader("programa1.txt"));
+        bufferRead = new BufferedReader(new FileReader("input.txt"));
     }
 
     public static Word[] getInput() throws IOException {

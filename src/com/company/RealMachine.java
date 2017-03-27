@@ -9,6 +9,7 @@ public class RealMachine {
 
     private CPU cpu;
     private Memory memory;
+    public final static int VM_SIZE_IN_BLOCKS = 16;
 
 
     public RealMachine(){
@@ -16,7 +17,7 @@ public class RealMachine {
         this.memory = new Memory();
     }
 	
-	public void Identify(String line, VirtualMachine VM){
+	/*public void Identify(String line, VirtualMachine VM){
         if(line.substring(0, 3).equals("ADD")){
             VM.cmdADD();
         }
@@ -77,7 +78,7 @@ public class RealMachine {
         else if(line.substring(0, 4).equals("PRTN")) {
             VM.cmdPRTN();
         }
-    }
+    }*/
 
     public static Integer hexToDec(String s) {
         switch(s.charAt(0)){
