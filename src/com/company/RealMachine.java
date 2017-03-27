@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * Created by suminskutis on 2017-03-25.
@@ -16,8 +17,8 @@ public class RealMachine {
         this.cpu = new CPU();
         this.memory = new Memory();
     }
-	
-	/*public void Identify(String line, VirtualMachine VM){
+	/*
+	public void Identify(String line, VirtualMachine VM) throws CloneNotSupportedException {
         if(line.substring(0, 3).equals("ADD")){
             VM.cmdADD();
         }
@@ -37,7 +38,7 @@ public class RealMachine {
             y = line.substring(4);
             z = hexToDec(x);
             w = hexToDec(y);
-            VM.cmdPU(x, y);
+            VM.cmdPUSH(x, y);
         }
         else if(line.substring(0, 2).equals("PO")){
             String x, y;
@@ -46,7 +47,7 @@ public class RealMachine {
             y = line.substring(4);
             z = hexToDec(x);
             w = hexToDec(y);
-            VM.cmdPO(x, y);
+            VM.cmdPOP(x, y);
         }
         else if(line.substring(0, 2).equals("JP")){
             String x, y;
@@ -89,13 +90,24 @@ public class RealMachine {
             case 'D': return 13;
             case 'E': return 14;
             case 'F': return 15;
+
         }
     }
 
-    public void execute() throws FileNotFoundException {
-        InputDevice.openFile();
+    public  void execute() throws IOException, CloneNotSupportedException {
+        //InputDevice.openFile();
 
+        InputDevice.openFile();
+        Word[] aa; //InputDevice.getInput();
+
+        int i = 0;
+        String aaa = "a";
+        while(!(aaa.equals("HALT"))) {
+            aa = InputDevice.getInput();
+            aaa = Word.wordsToString(aa);
+
+            System.out.println(aaa);
+        }
     }
 
-
-}
+    }

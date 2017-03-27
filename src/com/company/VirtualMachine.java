@@ -4,10 +4,6 @@ public class VirtualMachine {
 
     private VirtualCPU virtualCPU;
 
-    private int index;
-
-    private static int x, y, z;
-    // Memory
     private VirtualMemory virtualMemory;
 
     public static final int MEMORY_SIZE = 256;
@@ -84,18 +80,6 @@ public class VirtualMachine {
         CPU.decreaseTI();
     }
 
-    public void cmdWR(int x) throws CloneNotSupportedException {
-        virtualMemory.write(virtualMemory.read(getSP()), x);
-        CPU.decreaseTI();
-    }
-
-    public void cmdRD(int x) throws CloneNotSupportedException {
-        virtualMemory.write(virtualMemory.read(x), getSP());
-        virtualCPU.decreaseSP();
-        CPU.decreaseTI();
-    }
-
-
 
     public void cmdPUSH(int x, int y) throws CloneNotSupportedException {
         virtualMemory.write(virtualMemory.read(RealMachine.VM_SIZE_IN_BLOCKS * x + y), getSP());
@@ -123,41 +107,28 @@ public class VirtualMachine {
         CPU.setSI(1);
     }
 
-    /*public void cmdJP(int x, int y) {
+    public void cmdJP(int x, int y) {
         if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.PROGRAM_START+VirtualMachine.PROGRAM_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.PROGRAM_START){
             CPU.setPI(1);
             return;
         }
-        CPU.setPC(PMMU.WORDS_IN_BLOCK * x + y);
-        TI--;
+        CPU.setPC(RealMachine.VM_SIZE_IN_BLOCKS * x + y);
+        CPU.decreaseTI();
     }
 
-    public void cmdJE(int x, int y) {
+    public void cmdJE(int x, int y) throws CloneNotSupportedException {
         if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) > VirtualMachine.PROGRAM_START+VirtualMachine.PROGRAM_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.PROGRAM_START){
             CPU.setPI(1);
             return;
         }
-        if (Word.wordToInt(main.PMMU.read(SP)) == 1) {
-            CPU.setPC(PMMU.WORDS_IN_BLOCK * x + y);
-            SP--;
-        }
-        TI--;
-    }*/
+        if (Word.wordToInt(virtualMemory.read(getSP())) == 1) {
+            CPU.setPC(RealMachine.VM_SIZE_IN_BLOCKS * x + y);
+            virtualCPU.decreaseSP();
 
-    /* REIKIA EDITINTI
-    public void cmdST(int x, int y) {
-        if((RealMachine.VM_SIZE_IN_BLOCKS * x + y) == VirtualMachine.DATA_START+VirtualMachine.DATA_SIZE || (RealMachine.VM_SIZE_IN_BLOCKS * x + y) < VirtualMachine.DATA_START){
-            CPU.setPI(1);
-            return;
         }
-        int PID = Word.wordToInt(PMMU.read(PMMU.WORDS_IN_BLOCK * x + y));
-        if (PID != 0) {
-            PMMU.write(Word.intToWord(0), PMMU.WORDS_IN_BLOCK * x + y);
-            RealMachine.killVirtualMachine(PID);
-        }
-        TI--;
+        CPU.decreaseTI();
     }
-    */
+
     public static void cmdSTOPF() {// BESALYGINIO SUSTOJIMO KOMANDA -> PAS MUS HALT
         CPU.setSI(5);
 
@@ -168,9 +139,5 @@ public class VirtualMachine {
         CPU.decreaseTI();
         CPU.setSI(4);
     }
-
-  /*  public int getSP(){
-        return virtualCPU.getSP();
-    }*/
 }
 
