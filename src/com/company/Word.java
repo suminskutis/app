@@ -23,13 +23,12 @@ public class Word  {
             return data[index];
         }
 
-        // TODO: setByte, but should data be final?..
         public void setByte(int index, byte info) {
             data[index] = info;
         }
 
         @Override
-        protected Word clone(){  // FIXME: This method should throw: throws CloneNotSupportedException
+        protected Word clone() {
             return new Word(this);
         }
 
@@ -55,7 +54,7 @@ public class Word  {
             bb.putInt(value);
             Word word = new Word();
             for (int i = 0; i < SIZE; i++) {
-                word.setByte(i, bb.get(i));  // FIXME: data final????
+                word.setByte(i, bb.get(i));
             }
             return word;
         }
@@ -64,7 +63,7 @@ public class Word  {
             String string = "";
             for (Word w : words) {
                 //System.out.println(string);
-                int wordAsInt = Word.wordToInt(w);
+                //int wordAsInt = Word.wordToInt(w);
                 for (int i = 0; i < SIZE; i++) {
                     string += (char) w.getByte(i);
                 }

@@ -23,18 +23,20 @@ public class VirtualMachine {
 
     // Default constructor
     public VirtualMachine(){
-        this.virtualCPU = new VirtualCPU();
-        this.virtualMemory = new VirtualMemory(MEMORY_SIZE);
+        virtualCPU = new VirtualCPU();
+        virtualMemory = new VirtualMemory(MEMORY_SIZE);
     }
 
     public VirtualMemory getVirtualMemory(){
-        return this.virtualMemory;
+        return virtualMemory;
     }
 
     public void printMemory() {
         for(int i = 0; i < MEMORY_SIZE; i++)
-            System.out.println(this.virtualMemory.getMemory()[i] + " ");
+            System.out.println(virtualMemory.getMemory()[i] + " ");
     }
+
+    public void aaa(){}
 
     public int getPC() throws CloneNotSupportedException {
         return Word.wordToInt(virtualMemory.read(PC_ADDRESS));
@@ -129,7 +131,7 @@ public class VirtualMachine {
         CPU.decreaseTI();
     }
 
-    public static void cmdSTOPF() {// BESALYGINIO SUSTOJIMO KOMANDA -> PAS MUS HALT
+    public static void cmdHALT() {
         CPU.setSI(5);
 
     }

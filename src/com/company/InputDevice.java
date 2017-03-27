@@ -11,7 +11,6 @@ import java.io.IOException;
 public class InputDevice {
 
     private static BufferedReader bufferRead;
-    //private static String string = new String("ABCDEFGHI");
 
     public static void openFile() throws FileNotFoundException {
         bufferRead = new BufferedReader(new FileReader("input.txt"));
@@ -25,8 +24,6 @@ public class InputDevice {
             return null;
 
         byte[] bytes = s.getBytes();
-
-        //byte[] bytes = string.getBytes();
 
         Word[] words;
 

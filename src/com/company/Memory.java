@@ -27,7 +27,7 @@ public class Memory {
     public Word read(int address) throws CloneNotSupportedException {
         return memory[address].clone();
     }
-    //?????????????? kodėl čia duodam clone?
+
     public void write(Word word, int address) throws CloneNotSupportedException {
         memory[address] = word.clone();
 

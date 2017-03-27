@@ -72,12 +72,10 @@ public class CPU {
         setMODE(supervisor);
     }
 
-    // Getters
     public static int getPTR() {
         return PTR;
     }
 
-    // Setters
     public static void setPTR(int PTR) {
         CPU.PTR = PTR;
     }

@@ -1,7 +1,5 @@
 package com.company;
 
-import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -17,8 +15,8 @@ public class RealMachine {
 
 
     public RealMachine() {
-        this.cpu = new CPU();
-        this.memory = new Memory();
+        cpu = new CPU();
+        memory = new Memory();
     }
 	/*
 	public void Identify(String line, VirtualMachine VM) throws CloneNotSupportedException {
@@ -105,36 +103,25 @@ public class RealMachine {
     }
 
     public void execute() throws IOException, CloneNotSupportedException {
-        //InputDevice.openFile();
 
         virtualMachine = new VirtualMachine();
         InputDevice.openFile();
-        Word[] words; //InputDevice.getInput();
+        Word[] words;
 
 
         String line;
-        int counter = 0;
-        /*while(!(line.equals("HALT"))) {
-            words = InputDevice.getInput();
-            line = Word.wordsToString(words);
-
-            System.out.println(line);
-        }*/
-        try {
+        VirtualMemory mem  = virtualMachine.getVirtualMemory();
+        int counter = VirtualMachine.DATA_START;
             line = Word.wordsToString(InputDevice.getInput());
-            if (line.equals("DATASEG")) {
+            if (line.equals("DATA")) {
                 CPU.setCH1(1);
                 words = InputDevice.getInput();
+                System.out.println( words );
                 CPU.setCH1(0);
                 line = Word.wordsToString(words);
-                while (!(line.equals("CODESEG"))) {
+                while (!(line.equals("CODE"))) {
                     for (Word w : words) {
-                        for (int i = 0; i < 4; i++) {
-                            byte b = w.getByte(i);
-                            if (b != 0x0) {
-                                this.virtualMachine.getVirtualMemory().write(Word.intToWord(b), VirtualMachine.DATA_START + counter++);
-                            }
-                        }
+                                mem.write(w, VirtualMachine.DATA_START + counter++);
                     }
                     CPU.setCH1(1);
                     words = InputDevice.getInput();
@@ -143,14 +130,24 @@ public class RealMachine {
                 }
 
             }
-        }catch(Exception e){
-            System.out.println("BYBYS");
-        }
-        //this.virtualMachine.printMemory();
-    }
-}
+        counter = VirtualMachine.PROGRAM_START;
+        CPU.setCH1(1);
+        words = InputDevice.getInput();
+        CPU.setCH1(0);
+        line = Word.wordsToString(words);
+        while (!line.equals("HALT")) {
+            for (Word w : words) {
+                       mem.write(w, VirtualMachine.PROGRAM_START + counter++);
 
-//      }
-//        //vm.getVirtualMemory().print();
-//    }
-//}
+            }
+            CPU.setCH1(1);
+            words = InputDevice.getInput();
+            CPU.setCH1(0);
+            line = Word.wordsToString(words);
+        }
+        virtualMachine.printMemory();
+    }
+
+
+    }
+
