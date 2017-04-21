@@ -11,7 +11,7 @@ public class VirtualMachine {
     final static int DATA_START = 0;
     final static int DATA_SIZE = 112;
 
-    final static int PROGRAM_START = 112;
+    final static int    PROGRAM_START = 112;
     final static int PROGRAM_SIZE = 112;
 
     final static int STACK_START = 224;

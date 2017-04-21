@@ -11,9 +11,7 @@ import java.util.Arrays;
 
 import sun.misc.IOUtils;
 
-/**
- * Created by suminskutis on 2017-03-25.
- */
+
 public class InputValidator {
 	
 	public boolean validateString (String filename) throws IOException {

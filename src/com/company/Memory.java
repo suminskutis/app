@@ -10,7 +10,7 @@ public class Memory {
     private int size = 4096;
     private Word[] memory;
 
-    //užpildom atmintį nurodytu žodžių skaičiumi
+    //užpildom atmintį žodžiais
     public Memory(){
         if (size > 0){
             this.size = size;

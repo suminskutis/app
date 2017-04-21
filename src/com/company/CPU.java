@@ -10,33 +10,11 @@ import java.util.Map;
  */
 public class CPU {
 
-    public static final Map<String, Integer> cmdList;
-    static {
-        Map<String, Integer> tempMap = new HashMap<String, Integer>();
-        tempMap.put("ADD", 0);
-        tempMap.put("SUB", 0);
-        tempMap.put("MUL", 0);
-        tempMap.put("DIV", 0);
-        tempMap.put("WR", 1);
-        tempMap.put("RD", 1);
-        tempMap.put("CMP", 0);
-        tempMap.put("CPID", 0);
-        tempMap.put("LD", 2);
-        tempMap.put("PT", 2);
-        tempMap.put("PUN", 1);
-        tempMap.put("PUS", 1);
-        tempMap.put("P", 3);
-        tempMap.put("JP", 2);
-        tempMap.put("JE", 2);
-        tempMap.put("JL", 2);
-        tempMap.put("JG", 2);
-        tempMap.put("FO", 2);
-        cmdList = Collections.unmodifiableMap(tempMap);
-    }
-    private static int x, y, z;
+
     public static final int SUPERVISOR = 0;
     public static final int USER = 1;
-    // Registers
+
+
     private static int PTR;
     private static int PC;
     private static int SP;
@@ -46,17 +24,15 @@ public class CPU {
     private static int TI;
     private static int PI;
 
-    // Commands
     private static int SI;
     private static int CH1;
     private static int CH2;
     private static int CH3;
-    // Additional variables
+
     private static int supervisor = 0;
     private static int time = 20;
 
 
-    // Default constructor
     public CPU() {
         setPTR(0);
         setPC(0);

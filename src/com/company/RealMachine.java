@@ -103,11 +103,33 @@ public class RealMachine {
     }
 
     public void execute() throws IOException, CloneNotSupportedException {
+        /*TODO aplamai
+        * showMemory();
+        * showRegisters(); Yra githube pirmi du metodai
+        * Perziuret ar VM komandos geros|| Pagal 1a dokumenta pasizet
+        * executeCommands(); funkcija vykdys komandas is virtualios atminties
+        *
+        *
+        * */
 
-        virtualMachine = new VirtualMachine();
-        InputDevice.openFile();
+
+        // if flashregistras = true then
+
+        //InputDevice.openFile(); Gal ir kitos funkcijos reikia, Pradesim daryt suprasim
+        //TODO surasom i SUPERVISOR atminti
+
+        // patikrinam ar sintaksiskai gera programa ->> jeigu neteisinga PI=4 ....kvieciamas pertraukimas, atitinkantis sita klaida(CIA VELIAU JAUCIU SITAS)
+        //TODO InputValidator pratikrins sintaxe programos
+
+        // sukopijuojam flasho programa i HDD (visa nuo pradzios iki pabaigos, nesvarbu kur duomenu, kur code blokas)
+        //TODO ""sita darysim tik tada kai veiks su viena programa"" Reikia pasidaryt start ir end taskus, kad zinotumeme kur prasideda ir kur baigiasi pirma, antra, trecia,..... programos
+
+
+        virtualMachine = new VirtualMachine(); // kazkaip reikia pazymeti, kad realios atminties dalis tapo uzimta, nes isskyrem VIRTUAL MEMORY dali
+
+        InputDevice.openFile(); // sitas turetu eiti pacioj EXECUTE pradzioje ->> surasytumeme i SUPERVISOR atminti.
+                                // cia jau skaitysime programa is HDD, o ne is flasho.
         Word[] words;
-
 
         String line;
         VirtualMemory mem  = virtualMachine.getVirtualMemory();
@@ -116,7 +138,6 @@ public class RealMachine {
             if (line.equals("DATA")) {
                 CPU.setCH1(1);
                 words = InputDevice.getInput();
-                System.out.println( words );
                 CPU.setCH1(0);
                 line = Word.wordsToString(words);
                 while (!(line.equals("CODE"))) {
@@ -130,7 +151,7 @@ public class RealMachine {
                 }
 
             }
-        counter = VirtualMachine.PROGRAM_START;
+        counter = 0;
         CPU.setCH1(1);
         words = InputDevice.getInput();
         CPU.setCH1(0);
